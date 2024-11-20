@@ -5,6 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { usuarios, usuariosSchema } from './schema/usuarios.schema';
 @Module({
   controllers: [UsuariosController],
-  providers: [Usu1ariosService],
+  providers: [UsuariosService],
 })
 export class UsuariosModule {}
