@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateNotificacioneDto } from './dto/create-notificacione.dto';
 import { UpdateNotificacioneDto } from './dto/update-notificacione.dto';
-
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { notificaciones } from './schema/notificaciones.schema';
 @Injectable()
 export class NotificacionesService {
-  create(createNotificacioneDto: CreateNotificacioneDto) {
-    return 'This action adds a new notificacione';
+  constructor(@InjectModel(notificaciones.name) private songModel: Model<notificaciones>) {}
+  async create(createNotificacioneDto: CreateNotificacioneDto) {
+    const creatednotificacione = new this.songModel(createNotificacioneDto);
+    const result = await creatednotificacione.save();
+
+    return result
   }
 
   findAll() {

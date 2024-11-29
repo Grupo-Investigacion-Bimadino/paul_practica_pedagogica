@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCursoDto } from './dto/create-curso.dto';
 import { UpdateCursoDto } from './dto/update-curso.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { cursos } from './schema/cursos.schema';
+
 
 @Injectable()
 export class CursosService {
-  create(createCursoDto: CreateCursoDto) {
-    return 'This action adds a new curso';
+  constructor(@InjectModel(cursos.name) private songModel: Model<cursos>) {}
+async create(createCursoDto: CreateCursoDto) {
+  const createdCurso = new this.songModel(createCursoDto);
+  const result = await createdCurso.save();
+
+  return result
   }
 
   findAll() {
